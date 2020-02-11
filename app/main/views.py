@@ -9,3 +9,7 @@ def index():
 @main.route('/chart')
 def showChart():
     return render_template('chart.html')
+
+@main.route('/about')
+def about():
+    return render_template('about.html')

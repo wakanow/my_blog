@@ -2,19 +2,19 @@
 
 {% block title %}请认证您的账号{% endblock %}
 
-{% block page_content %}
-<div class="page-header">
-    <h1>
-        Hello, {{ current_user.username }}!
-    </h1>
-    <h3>您的账号还没有认证。</h3>
-    <p>
-        在您进入网站之前，您应该去认证您的账号。
-        检查你的邮箱，你应该收到了一封带有认证链接的邮件。
-    </p>
-    <p>
-        需要再次发送邮件?
-        <a href="{{ url_for('auth.resend_confirmation') }}">点击这里</a>
-    </p>
-</div>
+{% block content %}
+    <div class="page-header">
+        <h1>
+            Hello, {{ current_user.username }}!
+        </h1>
+        <h3>您的账号还没有认证。</h3>
+        <p>
+            在您进入网站之前，您应该去认证您的账号。
+            检查你的邮箱，你应该收到了一封带有认证链接的邮件。
+        </p>
+        <p>
+            需要再次发送邮件?
+            <a href="{{ url_for('auth.resend_confirmation') }}">点击这里</a>
+        </p>
+    </div>
 {% endblock %}

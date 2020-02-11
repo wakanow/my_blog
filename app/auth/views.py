@@ -96,10 +96,10 @@ def change_password():
             current_user.password = form.password.data
             db.session.add(current_user)
             db.session.commit()
-            flash('您的密码已经被修改。')
+            flash('您的密码已经被修改。' , 'success')
             return redirect(url_for('main.index'))
         else:
-            flash('无效的密码。')
+            flash('无效的密码。', 'warning')
     return render_template("auth/change_password.html", form=form)
 
 
@@ -114,7 +114,7 @@ def password_reset_request():
             token = user.generate_reset_token()
             send_email(user.email, '重置你的密码',
                        'auth/email/reset_password', user=user, token=token)
-            flash('重置密码邮件已经发送到你的邮箱')
+            flash('重置密码邮件已经发送到你的邮箱', 'success')
             return redirect(url_for('auth.login'))
     return render_template('auth/reset_password.html', form=form)
 
@@ -127,7 +127,7 @@ def password_reset(token):
     if form.validate_on_submit():
         if User.reset_password(token, form.password.data):
             db.session.commit()
-            flash('您的密码已经修改')
+            flash('您的密码已经修改', 'success')
             return redirect(url_for('auth.login'))
         else:
             return redirect(url_for('main.index'))
@@ -144,17 +144,17 @@ def change_email_request():
             print(token)
             send_email(new_email, '认证你的邮箱', 'auth/email/change_email',
                        user=current_user, token=token)
-            flash('一封指导你认证的邮件已经发送到你的邮箱')
+            flash('一封指导你认证的邮件已经发送到你的邮箱', 'success')
             return redirect(url_for('main.index'))
         else:
-            flash('无效的邮箱或密码')
+            flash('无效的邮箱或密码', 'warning')
     return render_template('auth/change_email.html', form=form)
 
 @auth.route('/change_email/<token>')
 def change_email(token):
     if current_user.change_email(token):
         db.session.commit()
-        flash('您的邮箱已经修改')
+        flash('您的邮箱已经修改', 'success')
     else:
-        flash('无效的请求')
+        flash('无效的请求', 'warning')
     return redirect(url_for('main.index'))
