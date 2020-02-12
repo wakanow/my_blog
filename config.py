@@ -19,6 +19,13 @@ class Config:
     FLASKY_ADMIN = '15270211956@163.com'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+    BLUELOG_EMAIL = os.getenv('BLUELOG_EMAIL')
+    BLUELOG_POST_PER_PAGE = 5
+    BLUELOG_MANAGE_POST_PER_PAGE = 5
+    BLUELOG_COMMENT_PER_PAGE = 10
+    # ('theme name', 'display name')
+    BLUELOG_THEMES = {'perfect_blue': 'Perfect Blue', 'black_swan': 'Black Swan'}
+
     @staticmethod
     def init_app(app):
         pass

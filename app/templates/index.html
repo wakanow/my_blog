@@ -1,9 +1,28 @@
 {% extends "base.html" %}
+{% from 'bootstrap/pagination.html' import render_pagination %}
 
-{% block title %}my blog{% endblock %}
+{% block title %}主页{% endblock %}
 
 {% block content %}
-    <div class="page-header">
-        <h1>Hello, {% if current_user.is_authenticated %}{{ current_user.username }}{% else %}Stranger{% endif %}!</h1>
-    </div>
+    {% if current_user.is_authenticated %}
+        <div class="page-header">
+            <h1 class="display-3">{{ user.blog_title|default('Blog Title') }}</h1>
+            <h4 class="text-muted">&nbsp;{{ user.blog_sub_title|default('Blog Subtitle') }}</h4>
+        </div>
+        <div class="row">
+            <div class="col-sm-8">
+                {% include 'blog/_posts.html' %}
+                {% if posts %}
+                    <div class="page-footer">{{ render_pagination(pagination) }}</div>
+                {% endif %}
+            </div>
+            <div class="col-sm-4 sidebar">
+                {% include 'blog/_sidebar.html' %}
+            </div>
+        </div>
+    {% else %}
+        <h1>Hello Stranger!</h1>
+    {% endif %}
+
 {% endblock %}
+

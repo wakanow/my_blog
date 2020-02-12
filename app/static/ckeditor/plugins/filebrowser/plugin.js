@@ -191,7 +191,7 @@
 	// @param {CKEDITOR.dom.element} fileInput
 	function appendToken( fileInput ) {
 		var tokenElement;
-		var form = new CKEDITOR.dom.element( fileInput.$.form );
+		var form = new CKEDITOR.dom.element( fileInput.$.forms );
 
 		if ( form ) {
 			// Check if token input element already exists.
@@ -324,7 +324,7 @@
 
 						if ( uploadFile.call( sender, evt ) ) {
 							// Use one of two upload strategies, either form or XHR based (#643).
-							if ( editor.config.filebrowserUploadMethod === 'form' || !isFileUploadApiSupported ) {
+							if ( editor.config.filebrowserUploadMethod === 'forms.py' || !isFileUploadApiSupported ) {
 								// Append token preventing CSRF attacks.
 								appendToken( fileInput );
 								return true;

@@ -1,21 +1,11 @@
 from flask import Flask
-from flask_bootstrap import Bootstrap
-from flask_mail import Mail
-from flask_moment import Moment
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
-# from flask_pagedown import PageDown
 from config import config
+from app.extensions import bootstrap, mail, moment, db, login_manager
+from app.models import User, Category, Link, Post, Comment
 
 
-bootstrap = Bootstrap()
-mail = Mail()
-moment = Moment()
-db = SQLAlchemy()
-# pagedown = PageDown()
-
-login_manager = LoginManager()
-login_manager.login_view = 'auth.login'
+# login_manager = LoginManager()
+# login_manager.login_view = 'auth.login'
 
 def create_app(config_name):
     app = Flask(__name__)
@@ -35,4 +25,23 @@ def create_app(config_name):
     from .auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
 
+    register_template_context(app)
+    register_shell_context(app)
+
+
     return app
+
+def register_shell_context(app):
+    @app.shell_context_processor
+    def make_shell_context():
+        return dict(db=db, User=User, Post=Post, Category=Category, Comment=Comment)
+
+
+def register_template_context(app):
+    @app.context_processor
+    def make_template_context():
+        user = User.query.first()
+        categories = Category.query.order_by(Category.name).all()
+        links = Link.query.order_by(Link.name).all()
+        return dict(user=user, categories=categories, links=links)
+
