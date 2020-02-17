@@ -22,7 +22,7 @@ class RegistrationForm(FlaskForm):
                'Usernames must have only letters, numbers, dots or '
                'underscores')])
     password = PasswordField('密码', validators=[
-        DataRequired(), EqualTo('password2', message='Passwords must match.')])
+        DataRequired(), EqualTo('password2', message='两次密码必须一致。')])
     password2 = PasswordField('再输一次密码', validators=[DataRequired()])
     submit = SubmitField('注册')
 
