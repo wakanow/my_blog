@@ -8,7 +8,6 @@ app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 migrate = Migrate(app, db)
 
 
-
 @app.cli.command()
 @click.option('--category', default=10, help='Quantity of categories, default is 10.')
 @click.option('--post', default=50, help='Quantity of posts, default is 50.')
